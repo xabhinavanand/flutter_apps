@@ -1,0 +1,71 @@
+import 'package:flutter/cupertino.dart';
+import 'main.dart';
+import 'package:flutter/material.dart';
+import 'calculatorBrain.dart';
+// ignore: must_be_immutable
+class ResultPage extends StatelessWidget {
+
+  ResultPage({this.height,this.weight});
+  final int height;
+  final int weight;
+  Widget build(BuildContext context) {
+    CalculatorBrain obj=CalculatorBrain(height: height,weight: weight);
+    return Scaffold(
+      backgroundColor: Color(0xff0C1234),
+      appBar: AppBar(
+        title: Text('BMI CALCULATOR'),
+        backgroundColor: Color(0xFF101639),
+      ),
+      body: Container(
+        margin: EdgeInsets.fromLTRB(20.0, 30.0, 20.0, 200.0),
+        decoration: BoxDecoration(
+          color: inactiveCardColor,
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        width: double.infinity,
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              Padding(
+                  padding: EdgeInsets.fromLTRB(0, 30.0, 0, 0),
+                  child: Text(
+                    'Your BMI IS',
+                    style: TextStyle(
+                        fontSize: 30,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white),
+                  )),
+              Text(
+
+                obj.getBMI(),
+                style: TextStyle(color: Colors.green, fontSize: 30.0),
+              ),
+                obj.getBmiText(),
+              Text(obj.getbmiDetails(),style: TextStyle(fontSize: 20.0,color: Colors.white,),)
+          ,GestureDetector(
+                onTap:(){ Navigator.pop(context);},
+                child: Container(
+                  margin: EdgeInsets.only(top:10.0),
+                  width: double.infinity,
+                  height: 100.0,
+                  child: Center(
+                    child: Text(
+                      'Recalculate',
+                      style: TextStyle(
+                          fontSize: 30.0,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white),
+                    ),
+                  ),
+                  decoration: BoxDecoration(
+                    color: Colors.pink,
+                  ),
+                ),
+              ),  ],
+          ),
+        ),
+      ),
+    );
+  }
+}

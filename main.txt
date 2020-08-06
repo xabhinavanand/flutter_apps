@@ -1,0 +1,352 @@
+import 'package:bmi_calculator/ResultsPage.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
+String height = "180";
+const inactiveCardColor = Color(0xFF272A4D);
+const activeCardColor = Color(0xFF141A3C);
+
+void main() {
+  runApp(
+    MaterialApp(
+        home: Scaffold(
+          backgroundColor: Color(0xff0C1234),
+          appBar: AppBar(
+            title: Text('BMI CALCULATOR'),
+            backgroundColor: Color(0xFF101639),
+          ),
+          body: MyHome(),
+      ) ,
+  ));
+}
+
+class MyHome extends StatefulWidget {
+  @override
+  _MyHomeState createState() => _MyHomeState();
+}
+
+class _MyHomeState extends State<MyHome> {
+  Color maleCardColor = inactiveCardColor;
+  Color femaleCardColor = inactiveCardColor;
+  int height = 180;
+  int weight = 60;
+  int age=18;
+
+  void updateColor(Color gender) {
+    if (gender == maleCardColor) {
+      maleCardColor = activeCardColor;
+      femaleCardColor = inactiveCardColor;
+    } else {
+      femaleCardColor = activeCardColor;
+      maleCardColor = inactiveCardColor;
+    }
+  }
+
+  Widget build(BuildContext context) {
+    return  Column(
+            children: <Widget>[
+              Expanded(
+                  child: Row(
+                children: <Widget>[
+                  Expanded(
+                      child: GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        updateColor(maleCardColor);
+                      });
+                    },
+                    child: ReusableCard(
+                        cardChild: CardContent(
+                            icon: FontAwesomeIcons.mars, label: 'MALE'),
+                        colour: maleCardColor),
+                  )),
+                  Expanded(
+                      child: GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        updateColor(femaleCardColor);
+                      });
+                    },
+                    child: ReusableCard(
+                        cardChild: CardContent(
+                            icon: FontAwesomeIcons.venus, label: 'FEMALE'),
+                        colour: femaleCardColor),
+                  )),
+                ],
+              )),
+              Expanded(
+                  child: Container(
+                child: Center(
+                  child: Column(
+                    children: <Widget>[
+                      Padding(
+                        padding: EdgeInsets.only(
+                          top: 10.0,
+                        ),
+                        child: Text(
+                          'HEIGHT',
+                          style: TextStyle(fontSize: 20.0, color: Colors.white),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 0.0,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Text(
+                            height.toString(),
+                            style: TextStyle(
+                              fontSize: 50.0,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Text(
+                            'Cm',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ],
+                      ),
+                      Slider(
+                          value: height.toDouble(),
+                          min: 120.0,
+                          max: 250.0,
+                          inactiveColor: Colors.grey,
+                          activeColor: Colors.pink,
+                          onChanged: (newValue) {
+                            setState(() {
+                              height = newValue.round();
+                            });
+                          })
+                    ],
+                  ),
+                ),
+                height: 200.0,
+                margin: EdgeInsets.all(20.0),
+                decoration: BoxDecoration(
+                  color: Color(0xFF272A4D),
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+              )),
+              Expanded(
+                  child: Row(
+                children: <Widget>[
+                  Expanded(
+                    child: ReusableCard(
+                        cardChild: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                Text(
+                                  weight.toString(),
+                                  style: TextStyle(
+                                    fontSize: 50.0,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                Text('Kg',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20,
+                                    )),
+                              ],
+                            ),
+                            Text(
+                              'WEIGHT',
+                              style: TextStyle(
+                                fontSize: 20.0,
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 10.0,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                RoundedButton(
+                                  onpressed: () {
+                                    setState(() {
+                                      weight++;
+                                    });
+                                  },
+                                  child: Icon(FontAwesomeIcons.plus,
+                                      color: Colors.black),
+                                ),
+                                RoundedButton(
+                                  onpressed: () {
+                                    setState(() {
+                                      weight--;
+                                    });
+                                  },
+                                  child: Icon(FontAwesomeIcons.minus,
+                                      color: Colors.black),
+                                )
+                              ],
+                            ),
+                          ],
+                        ),
+                        colour: inactiveCardColor),
+                  ),
+                  Expanded(
+                      child: ReusableCard(
+                          cardChild: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  Text(
+                                    age.toString(),
+                                    style: TextStyle(
+                                      fontSize: 50.0,
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Text(
+                                'AGE',
+                                style: TextStyle(
+                                  fontSize: 20.0,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              SizedBox(
+                                height: 10.0,
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  RoundedButton(
+                                    onpressed: () {
+                                      setState(() {
+                                        age++;
+                                      });
+                                    },
+                                    child: Icon(FontAwesomeIcons.plus,
+                                        color: Colors.black),
+                                  ),
+                                  RoundedButton(
+                                    onpressed: () {
+                                      setState(() {
+                                        age--;
+                                      });
+                                    },
+                                    child: Icon(FontAwesomeIcons.minus,
+                                        color: Colors.black),
+                                  )
+                                ],
+                              ),
+                            ],
+                          ),
+                          colour: Color(0xFF272A4D))),
+                ],
+              )),
+              GestureDetector(
+                onTap:(){ Navigator.push(context, MaterialPageRoute(builder: (context) =>ResultPage(height: height,weight: weight,)));},
+                child: Container(
+                  margin: EdgeInsets.only(top:10.0),
+                  width: double.infinity,
+                  height: 100.0,
+                  child: Center(
+                    child: Text(
+                      'Calculate',
+                      style: TextStyle(
+                          fontSize: 30.0,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white),
+                    ),
+                  ),
+                  decoration: BoxDecoration(
+                    color: Colors.pink,
+                  ),
+                ),
+              ),
+            ],
+          );
+  }
+}
+
+class CardContent extends StatelessWidget {
+  CardContent({this.icon, this.label});
+
+  final IconData icon;
+  final String label;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        Icon(
+          icon,
+          color: Colors.white,
+          size: 90.0,
+        ),
+        SizedBox(
+          height: 10.0,
+        ),
+        Text(
+          label,
+          style: TextStyle(
+            fontSize: 20.0,
+            color: Colors.white,
+          ),
+        )
+      ],
+    );
+  }
+}
+
+class ReusableCard extends StatelessWidget {
+  @override
+  ReusableCard({@required this.colour, this.cardChild});
+
+  final Color colour;
+  final Widget cardChild;
+
+  Widget build(BuildContext context) {
+    return Container(
+      child: cardChild,
+      decoration: BoxDecoration(
+        color: colour,
+        borderRadius: BorderRadius.circular(10.0),
+      ),
+      height: 200.0,
+      margin: EdgeInsets.all(20.0),
+    );
+  }
+}
+
+class RoundedButton extends StatelessWidget {
+  @override
+  RoundedButton({@required this.child, @required this.onpressed});
+
+  final Widget child;
+  final Function onpressed;
+
+  Widget build(BuildContext context) {
+    return RawMaterialButton(
+      onPressed: onpressed,
+      constraints: BoxConstraints.tightFor(
+        width: 40.0,
+        height: 40.0,
+      ),
+      shape: CircleBorder(),
+      child: child,
+      fillColor: Colors.grey,
+      elevation: 6.0,
+    );
+  }
+}
